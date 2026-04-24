@@ -1,6 +1,7 @@
 import { generateReturnsArray } from "./src/investmentGoals.js";
 
 const form = document.getElementById("investment-form");
+const clearFormButon = document.getElementById("clear-form");
 
 function renderProgression(event) {
   event.preventDefault();
@@ -34,6 +35,16 @@ function renderProgression(event) {
   );
 
   console.log(returnsArray);
+}
+
+function clearForm() {
+  form.reset();
+
+  const errorInputContainers = document.querySelectorAll(".error");
+  for (const errorInputContainer of errorInputContainers) {
+    errorInputContainer.classList.remove("error");
+    errorInputContainer.parentElement.querySelector("p").remove();
+  }
 }
 
 function validateInput(event) {
@@ -71,3 +82,4 @@ for (const formElement of form) {
 }
 
 form.addEventListener("submit", renderProgression);
+clearFormButon.addEventListener("click", clearForm);
