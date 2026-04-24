@@ -54,7 +54,7 @@ function renderProgression(event) {
     returnRatePeriod,
   );
 
-  const finalInvestmentObject = returnsArray[returnsArray.length - 1];
+  /*const finalInvestmentObject = returnsArray[returnsArray.length - 1];
 
   doughnutChartReference = new Chart(finalMoneyChart, {
     type: "doughnut",
@@ -114,7 +114,7 @@ function renderProgression(event) {
         },
       },
     },
-  });
+  });*/
 }
 
 function isObjectEmpty(obj) {
@@ -176,5 +176,5 @@ for (const formElement of form) {
   }
 }
 
-// form.addEventListener("submit", renderProgression);
+form.addEventListener("submit", renderProgression);
 clearFormButon.addEventListener("click", clearForm);
