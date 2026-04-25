@@ -16,30 +16,34 @@ const columnsArray = [
   {
     columnLabel: "Total investido",
     acessor: "investedAmount",
-    format: (numberInfo) => formatCurrency(numberInfo),
+    format: (numberInfo) => formatCurrencyToTable(numberInfo),
   },
   {
     columnLabel: "Rendimento mensal",
     acessor: "interestReturns",
-    format: (numberInfo) => formatCurrency(numberInfo),
+    format: (numberInfo) => formatCurrencyToTable(numberInfo),
   },
   {
     columnLabel: "Rendimento total",
     acessor: "totalInterestReturns",
-    format: (numberInfo) => formatCurrency(numberInfo),
+    format: (numberInfo) => formatCurrencyToTable(numberInfo),
   },
   {
     columnLabel: "Quantia total",
     acessor: "totalAmount",
-    format: (numberInfo) => formatCurrency(numberInfo),
+    format: (numberInfo) => formatCurrencyToTable(numberInfo),
   },
 ];
 
-function formatCurrency(value) {
+function formatCurrencyToTable(value) {
   return value.toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
   });
+}
+
+function formatCurrencyToGraph(value) {
+  return value.toFixed(2);
 }
 
 function renderProgression(event) {
@@ -74,7 +78,7 @@ function renderProgression(event) {
     returnRatePeriod,
   );
 
-  /*const finalInvestmentObject = returnsArray[returnsArray.length - 1];
+  const finalInvestmentObject = returnsArray[returnsArray.length - 1];
 
   doughnutChartReference = new Chart(finalMoneyChart, {
     type: "doughnut",
@@ -83,11 +87,11 @@ function renderProgression(event) {
       datasets: [
         {
           data: [
-            formatCurrency(finalInvestmentObject.investedAmount),
-            formatCurrency(
+            formatCurrencyToGraph(finalInvestmentObject.investedAmount),
+            formatCurrencyToGraph(
               finalInvestmentObject.totalInterestReturns * (1 - taxRate / 100),
             ),
-            formatCurrency(
+            formatCurrencyToGraph(
               (finalInvestmentObject.totalInterestReturns * taxRate) / 100,
             ),
           ],
@@ -110,14 +114,14 @@ function renderProgression(event) {
         {
           label: "Total investido",
           data: returnsArray.map((investmentObject) =>
-            formatCurrency(investmentObject.investedAmount),
+            formatCurrencyToGraph(investmentObject.investedAmount),
           ),
           backgroundColor: "rgb(59, 130, 246)",
         },
         {
           label: "Retorno do Investimento",
           data: returnsArray.map((investmentObject) =>
-            formatCurrency(investmentObject.interestReturns),
+            formatCurrencyToGraph(investmentObject.interestReturns),
           ),
           backgroundColor: "rgb(34, 197, 94)",
         },
@@ -134,7 +138,7 @@ function renderProgression(event) {
         },
       },
     },
-  });*/
+  });
 
   createTable(columnsArray, returnsArray, "results-table");
 }
@@ -197,6 +201,19 @@ for (const formElement of form) {
     formElement.addEventListener("blur", validateInput);
   }
 }
+
+const mainElement = document.querySelector("main");
+const carouselEl = document.getElementById("carousel");
+const nextButton = document.getElementById("slide-arrow-next");
+const previousButton = document.getElementById("slide-arrow-previous");
+
+nextButton.addEventListener("click", () => {
+  carouselEl.scrollLeft += mainElement.clientWidth;
+});
+
+previousButton.addEventListener("click", () => {
+  carouselEl.scrollLeft -= mainElement.clientWidth;
+});
 
 form.addEventListener("submit", renderProgression);
 clearFormButon.addEventListener("click", clearForm);
