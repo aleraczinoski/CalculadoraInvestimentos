@@ -161,6 +161,11 @@ function clearForm() {
   form.reset();
   resetCharts();
 
+  const tableElement = document.getElementById("results-table");
+  if (tableElement) {
+    tableElement.innerHTML = "";
+  }
+
   const errorInputContainers = document.querySelectorAll(".error");
   for (const errorInputContainer of errorInputContainers) {
     errorInputContainer.classList.remove("error");
